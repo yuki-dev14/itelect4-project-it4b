@@ -1,10 +1,7 @@
 import type { User, Grade } from "../types/index";
 
-/**
- * Get a user object by ID
- * @param id 
- * @returns 
- */
+
+
 function getUser(id: number): User {
   return {
     id: id,
@@ -16,12 +13,7 @@ function getUser(id: number): User {
   };
 }
 
-/**
- * Calculate a letter grade based on score 
- * @param score
- * @param maxScore
- * @returns 
- */
+
 function calculateGrade(score: number, maxScore: number): Grade {
   const percentage: number = (score / maxScore) * 100;
   if (percentage >= 90) return "A";
@@ -30,13 +22,6 @@ function calculateGrade(score: number, maxScore: number): Grade {
   return "F";
 }
 
-/**
- * Format a course name with units and semester information
- * @param name - The course name
- * @param units 
- * @param semester 
- * @returns
- */
 function formatCourse(name: string, units: number, semester: string): string {
   return `${name} (${units} units) - ${semester}`;
 }

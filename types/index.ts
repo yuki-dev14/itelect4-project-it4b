@@ -24,6 +24,7 @@ score?: number; // ? means this field is optional
 }
 
 
+
 // ===== TYPE ALIASES =====
 // A type alias gives a name to any type -- primitives, unions, functions, objects
 // Alias for a union type (string OR number)
@@ -56,6 +57,8 @@ console.log(`ID: ${id}`);
 }
 printId(101);
 printId("S2026-001");
+
+
 // ===== INTERSECTION TYPES -- combines ALL properties =====
 // StudentWithCourse must have all User fields AND enrolledCourse AND gpa
 export type StudentWithCourse = User & {
