@@ -1,5 +1,3 @@
-// Entities for the Campus Lost & Found Tracker 
-
 export enum ItemStatus {
   Lost = "lost",
   Found = "found",
@@ -31,6 +29,6 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-// Utility types (2 required)
+// Utility types
 export type ItemUpdate = Partial<Item>; // for editing an item
 export type UserSummary = Pick<User, "id" | "name">; // lightweight display info

@@ -20,7 +20,7 @@ A small console app modeling a campus lost-and-found system. Students can report
 ## How to run
 
 ```bash
-npm install
+npm install 
 npx ts-node src/index.ts
 npx ts-node src/app.ts
 ```
