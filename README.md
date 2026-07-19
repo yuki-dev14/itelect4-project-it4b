@@ -1,32 +1,52 @@
-# React + TypeScript + Vite
+# GT2P1 Lost and Found App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This project is a simple web app for managing lost and found items on campus.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Shows a sample lost item
+- Displays a user profile
+- Shows a claim summary
+- Allows basic item and claim actions in the UI
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
 
-## Expanding the Oxlint configuration
+## How to run
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open the local URL shown in the terminal.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Build
+
+To create a production build, run:
+
+```bash
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Types and utility types
+
+This app uses simple TypeScript types to organize data:
+
+- User: information about a person
+- Item: details about a lost or found item
+- Claim: a request to claim an item
+- ApiResponse<T>: a generic wrapper for responses
+
+It also uses utility types:
+
+- Partial<Item>: allows updating only some fields of an item
+- Pick<User, "id" | "name">: selects only the id and name from a user
+- Omit<Claim, "id" | "status" | "verifiedBy">: removes some fields from a claim
+- Record<number, Item>: creates a map of item IDs to items
