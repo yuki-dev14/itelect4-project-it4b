@@ -1,15 +1,12 @@
 
 // At the TOP of src/index.ts
-import type { User, Course, Submission } from "../types/index";
+import type { User, Course } from "./types/index";
 
 
 // ===== PRIMITIVE TYPE ANNOTATIONS =====
 // Variables with explicit types
 const projectName: string = "itelect4-project";
 const currentYear: number = 2026;
-const isFullStack: boolean = true;
-const nothing: null = null;
-const notSet: undefined = undefined;
 // Function: typed parameters + typed return value
 function greet(name: string, year: number): string {
 return `Welcome to ${name} -- AY ${year}!`;
@@ -24,9 +21,6 @@ logMessage(greet(projectName, currentYear));
 // ===== SPECIAL TYPES =====
 // any -- disables TypeScript type checking
 // [!] Avoid using this; it defeats the purpose of TypeScript
-let anything: any = "hello";
-anything = 42; // No error
-anything = true; // No error
 // unknown -- the safer version of any
 // You MUST check the type before using it
 let userInput: unknown = "test";
@@ -35,9 +29,7 @@ console.log(userInput.toUpperCase()); // OK -- TypeScript knows it's a string he
 }
 // never -- a function that NEVER returns
 // Used when a function always throws an error or loops forever
-function throwError(message: string): never {
-throw new Error(message);
-}
+// (omitted unused example in this demo file)
 
 
 const student: User = {
@@ -58,7 +50,7 @@ console.log(course);
 
 
 // ===== TYPE NARROWING =====
-import type { StringOrNumber } from "../types/index";
+import type { StringOrNumber } from "./types/index";
 // Narrowing with typeof
 // Without the if-check, TypeScript would error:
 // Property 'toUpperCase' does not exist on type 'number'

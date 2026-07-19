@@ -1,4 +1,4 @@
-import type { User, Grade } from "../types/index";
+import type { User, Grade } from "./types/index";
 
 
 

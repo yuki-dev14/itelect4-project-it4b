@@ -1,31 +1,32 @@
-# ITElect4 Project
+# React + TypeScript + Vite
 
-## Part 1 — TypeScript Basics (`src/index.ts`, `types/index.ts`)
-A short script demonstrating TypeScript fundamentals: a `User` interface, a `Grade` type, and functions with full type annotations (`getUser`, `calculateGrade`, `formatCourse`).
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Part 2 — Campus Lost & Found Tracker (`src/app.ts`, `types/app.ts`)
-A small console app modeling a campus lost-and-found system. Students can report found items, and other students can claim them.
+Currently, two official plugins are available:
 
-### Interfaces / Types
-- `User` — a student or security admin
-- `Item` — a lost/found item report
-- `Claim` — a claim linking a user to an item
-- `ItemStatus` — enum: `Lost`, `Found`, `Claimed`
-- `ApiResponse<T>` — generic interface wrapping function results
-- `ItemUpdate` — `Partial<Item>`, for editing an item
-- `UserSummary` — `Pick<User, "id" | "name">`, lightweight display info
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-**Generic function:** `getById<T extends { id: number }>(list: T[], id: number): T | undefined`
+## React Compiler
 
-## How to run
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-```bash
-npm install 
-npx ts-node src/index.ts
-npx ts-node src/app.ts
+## Expanding the Oxlint configuration
+
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
 ```
 
-Type-check only:
-```bash
-npx tsc --noEmit
-```
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

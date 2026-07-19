@@ -43,6 +43,7 @@ const position: Coordinate = { x: 10, y: 20 };
 const formatScore: Formatter = (value) => `${value}%`;
 console.log(studentId); // S2026-001
 console.log(formatScore(95.5)); // 95.5%
+console.log(position);
 
 
 
@@ -59,6 +60,7 @@ printId(101);
 printId("S2026-001");
 
 
+
 // ===== INTERSECTION TYPES -- combines ALL properties =====
 // StudentWithCourse must have all User fields AND enrolledCourse AND gpa
 export type StudentWithCourse = User & {
@@ -71,4 +73,6 @@ role: "student", isActive: true,
 enrolledCourse: { code: "ITELECT4", title: "IT Elective 4", units: 3, semester: "1st" },
 gpa: 1.25,
 };
+
+console.log(topStudent);
 
