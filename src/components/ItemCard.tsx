@@ -34,7 +34,7 @@ function ItemCard({ item, onClaim, onUpdate }: ItemCardProps) {
         </span>
       </div>
       <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
-      <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Reported: {item.dateReported}</p>
+      <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Reported: {item.dateReported.toLocaleDateString()}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         <button

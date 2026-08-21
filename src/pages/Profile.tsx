@@ -1,22 +1,14 @@
 import useAuthStore from "../store/authStore";
-import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const token = useAuthStore((s) => s.token);
-  const logout = useAuthStore((s) => s.logout);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/', { replace: true });
-  };
+  const username = useAuthStore((s) => s.username);
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-      <p>Token: <code className="break-all">{token ?? 'none'}</code></p>
-      <div className="mt-4">
-        <button onClick={handleLogout} className="rounded bg-amber-500 px-3 py-1">Logout</button>
+      <div className="max-w-xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p className="text-sm font-medium text-slate-500">Account</p>
+        <h2 className="mt-1 text-2xl font-semibold text-slate-900">Profile</h2>
+        <p className="mt-5 text-slate-600">Username: <strong className="text-slate-900">{username ?? 'none'}</strong></p>
       </div>
     </div>
   );

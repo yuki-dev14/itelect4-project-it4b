@@ -29,7 +29,7 @@ export interface Item {
   description: string;
   status: ItemStatus;
   reportedBy: number; // User.id
-  dateReported: string;
+  dateReported: Date;
 }
 
 export interface Claim {
@@ -52,3 +52,8 @@ export type ItemUpdate = Partial<Item>; // for editing an item
 export type UserSummary = Pick<User, "id" | "name">; // lightweight display info
 export type NewClaimInput = Omit<Claim, "id" | "status" | "verifiedBy">;
 export type ItemsById = Record<number, Item>;
+
+/** JSON transport types keep dates as strings and let the server generate ids. */
+export type ItemApi = Omit<Item, "dateReported"> & { dateReported: string };
+export type NewItemInput = Omit<Item, "id" | "dateReported"> & { dateReported: string };
+export type NewClaimApiInput = Omit<Claim, "id" | "status" | "verifiedBy">;

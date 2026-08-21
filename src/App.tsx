@@ -12,17 +12,17 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="items" element={<Items />} />
-        <Route path="items/:id" element={<ItemDetail />} />
-        <Route path="login" element={<Login />} />
         <Route element={<ProtectedRoute />}>
+          <Route index element={<Home />} />
+          <Route path="items" element={<Items />} />
+          <Route path="items/:id" element={<ItemDetail />} />
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
