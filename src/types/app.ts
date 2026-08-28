@@ -56,4 +56,7 @@ export type ItemsById = Record<number, Item>;
 /** JSON transport types keep dates as strings and let the server generate ids. */
 export type ItemApi = Omit<Item, "dateReported"> & { dateReported: string };
 export type NewItemInput = Omit<Item, "id" | "dateReported"> & { dateReported: string };
-export type NewClaimApiInput = Omit<Claim, "id" | "status" | "verifiedBy">;
+export type NewClaimApiInput = Omit<Claim, "id" | "status" | "verifiedBy"> & {
+  claimantEmail: string;
+  claimDetails: string;
+};

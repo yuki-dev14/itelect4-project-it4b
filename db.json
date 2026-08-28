@@ -1,9 +1,108 @@
 {
   "items": [
-    { "id": 1, "title": "Black Umbrella", "description": "Left near the library entrance", "status": "found", "reportedBy": 2, "dateReported": "2026-07-10" },
-    { "id": 2, "title": "Blue Water Bottle", "description": "Found in the student lounge", "status": "lost", "reportedBy": 1, "dateReported": "2026-07-15" }
+    {
+      "id": "1",
+      "title": "Black Umbrella",
+      "description": "Left near the library entrance",
+      "status": "found",
+      "reportedBy": 2,
+      "dateReported": "2026-07-10"
+    },
+    {
+      "id": "2",
+      "title": "Blue Water Bottle",
+      "description": "Found in the student lounge",
+      "status": "lost",
+      "reportedBy": 1,
+      "dateReported": "2026-07-15"
+    }
   ],
   "claims": [
-    { "id": 1, "itemId": 1, "claimantId": 1, "status": "verified", "verifiedBy": 2 }
-  ]
+    {
+      "id": "1",
+      "itemId": 1,
+      "claimantId": 1,
+      "status": "verified",
+      "verifiedBy": 2
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "mNqkar8Z4KU"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "gtYIR1Vp438"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "pjSgFijqT9A"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "j4K54FMdJkE"
+    },
+    {
+      "itemId": "1",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "p9VcEA9jlug"
+    },
+    {
+      "itemId": "1",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "osYrXW0t-18"
+    },
+    {
+      "itemId": "1",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "6uGeD1bmBxw"
+    },
+    {
+      "itemId": "1",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "qg3LF7kdQAU"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "DFsgaDzMPaM"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "okw0GdL2DSQ"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "vxBDxuGUvUU"
+    },
+    {
+      "itemId": "1",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "7tU44DerwdY"
+    },
+    {
+      "itemId": "2",
+      "claimantId": 1,
+      "status": "pending",
+      "id": "q2B9bzJThCI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
