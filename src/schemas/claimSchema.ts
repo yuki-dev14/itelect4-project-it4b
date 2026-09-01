@@ -6,11 +6,7 @@ export const claimSchema = z.object({
   claimDetails: z
     .string()
     .trim()
-    .min(20, "Describe at least 20 characters about why this item is yours.")
-    .refine(
-      (details) => /\b(black|blue|red|green|white|near|library|lounge|bag|bottle|umbrella|keys)\b/i.test(details),
-      "Include a distinguishing color, location, or item feature."
-    ),
+    .min(20, "Describe at least 20 characters about why this item is yours."),
 });
 
 export type ClaimFormValues = z.infer<typeof claimSchema>;

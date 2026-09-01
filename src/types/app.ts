@@ -1,4 +1,7 @@
+// Shared type definitions for the app's core domain.
+// These types keep the data model consistent across components and API calls.
 export const ItemStatus = {
+  // Reserved for future item lifecycle states; not all are used in the current UI flow.
   Lost: "lost",
   Found: "found",
   Claimed: "claimed",
@@ -7,6 +10,7 @@ export const ItemStatus = {
 export type ItemStatus = typeof ItemStatus[keyof typeof ItemStatus];
 
 export const ClaimStatus = {
+  // Reserved for future moderation/approval workflow.
   Pending: "pending",
   Verified: "verified",
   Rejected: "rejected",
@@ -14,8 +18,10 @@ export const ClaimStatus = {
 
 export type ClaimStatus = typeof ClaimStatus[keyof typeof ClaimStatus];
 
+// Reserved for later role expansion if admin or security roles are added.
 export type UserRole = "student" | "security_admin";
 
+// A user in the campus system.
 export interface User {
   id: number;
   name: string;
@@ -23,6 +29,7 @@ export interface User {
   role: UserRole;
 }
 
+// A found/lost item record.
 export interface Item {
   id: number;
   title: string;
@@ -32,6 +39,7 @@ export interface Item {
   dateReported: Date;
 }
 
+// A claim made for an item.
 export interface Claim {
   id: number;
   itemId: number;
@@ -47,13 +55,13 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-// Utility types
-export type ItemUpdate = Partial<Item>; // for editing an item
-export type UserSummary = Pick<User, "id" | "name">; // lightweight display info
+// Utility types for updates and smaller data objects.
+export type ItemUpdate = Partial<Item>; // For editing only some item fields.
+export type UserSummary = Pick<User, "id" | "name">; // Lightweight display info.
 export type NewClaimInput = Omit<Claim, "id" | "status" | "verifiedBy">;
 export type ItemsById = Record<number, Item>;
 
-/** JSON transport types keep dates as strings and let the server generate ids. */
+/** JSON transport types keep dates as strings because the backend stores JSON strings. */
 export type ItemApi = Omit<Item, "dateReported"> & { dateReported: string };
 export type NewItemInput = Omit<Item, "id" | "dateReported"> & { dateReported: string };
 export type NewClaimApiInput = Omit<Claim, "id" | "status" | "verifiedBy"> & {

@@ -4,7 +4,7 @@
       "id": "1",
       "title": "Black Umbrella",
       "description": "Left near the library entrance",
-      "status": "found",
+      "status": "claimed",
       "reportedBy": 2,
       "dateReported": "2026-07-10"
     },
@@ -14,94 +14,81 @@
       "description": "Found in the student lounge",
       "status": "lost",
       "reportedBy": 1,
+      "dateReported": "2026-07-11"
+    },
+    {
+      "id": "3",
+      "title": "Silver Keychain",
+      "description": "Left beside the engineering building steps",
+      "status": "found",
+      "reportedBy": 3,
+      "dateReported": "2026-07-12"
+    },
+    {
+      "id": "4",
+      "title": "Red Notebook",
+      "description": "Found on the second floor study table",
+      "status": "lost",
+      "reportedBy": 4,
+      "dateReported": "2026-07-13"
+    },
+    {
+      "id": "5",
+      "title": "Black Laptop Sleeve",
+      "description": "Near the library computer lab",
+      "status": "found",
+      "reportedBy": 5,
+      "dateReported": "2026-07-14"
+    },
+    {
+      "id": "6",
+      "title": "White Earbuds Case",
+      "description": "Found at the bus stop area",
+      "status": "lost",
+      "reportedBy": 6,
       "dateReported": "2026-07-15"
+    },
+    {
+      "id": "7",
+      "title": "Green ID Holder",
+      "description": "Left in the cafeteria queue",
+      "status": "found",
+      "reportedBy": 7,
+      "dateReported": "2026-07-16"
+    },
+    {
+      "id": "8",
+      "title": "Blue Calculator",
+      "description": "On top of the lab bench in Room 204",
+      "status": "lost",
+      "reportedBy": 8,
+      "dateReported": "2026-07-17"
+    },
+    {
+      "id": "9",
+      "title": "Pink Water Flask",
+      "description": "Found in the student center lounge",
+      "status": "found",
+      "reportedBy": 9,
+      "dateReported": "2026-07-18"
+    },
+    {
+      "id": "10",
+      "title": "Gray Wallet",
+      "description": "Left near the main gate checkpoint",
+      "status": "lost",
+      "reportedBy": 10,
+      "dateReported": "2026-07-19"
     }
   ],
   "claims": [
     {
-      "id": "1",
       "itemId": 1,
-      "claimantId": 1,
-      "status": "verified",
-      "verifiedBy": 2
-    },
-    {
-      "itemId": "2",
+      "claimantEmail": "euclidyabut14@gmail.com",
+      "claimDetails": "asdasdasdasdasddasdasd",
       "claimantId": 1,
       "status": "pending",
-      "id": "mNqkar8Z4KU"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "gtYIR1Vp438"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "pjSgFijqT9A"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "j4K54FMdJkE"
-    },
-    {
-      "itemId": "1",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "p9VcEA9jlug"
-    },
-    {
-      "itemId": "1",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "osYrXW0t-18"
-    },
-    {
-      "itemId": "1",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "6uGeD1bmBxw"
-    },
-    {
-      "itemId": "1",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "qg3LF7kdQAU"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "DFsgaDzMPaM"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "okw0GdL2DSQ"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "vxBDxuGUvUU"
-    },
-    {
-      "itemId": "1",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "7tU44DerwdY"
-    },
-    {
-      "itemId": "2",
-      "claimantId": 1,
-      "status": "pending",
-      "id": "q2B9bzJThCI"
+      "id": "VHLTxKmIJew"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
