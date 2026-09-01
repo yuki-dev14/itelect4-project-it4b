@@ -7,10 +7,11 @@ interface UserCardProps {
   onRoleChange: (userId: number, newRole: UserRole) => void;
 }
 
+// Displays a user and lets the user change their role from a select box.
 function UserCard({ user, onRoleChange }: UserCardProps) {
   const [selectedRole, setSelectedRole] = useState<UserRole>(user.role);
 
-  // Typed event handler: React.ChangeEvent<HTMLSelectElement>
+  // When the select changes, update the local state and notify the parent.
   const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     const newRole = event.target.value as UserRole;
     setSelectedRole(newRole);

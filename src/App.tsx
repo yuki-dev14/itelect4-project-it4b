@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
+import Claims from "./pages/Claims";
 import ItemDetail from "./pages/ItemDetail";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
@@ -17,6 +18,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route index element={<Home />} />
           <Route path="items" element={<Items />} />
+          <Route path="claims" element={<Claims />} />
           <Route path="items/:id" element={<ItemDetail />} />
           <Route path="profile" element={<Profile />} />
         </Route>

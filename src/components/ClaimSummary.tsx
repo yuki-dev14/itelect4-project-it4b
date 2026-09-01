@@ -8,6 +8,7 @@ interface ClaimSummaryProps {
   response: ApiResponse<Claim>;
 }
 
+// Shows the result of a claim request and its current status.
 function ClaimSummary({ claim, claimant, response }: ClaimSummaryProps) {
   const statusColor: string =
     claim.status === ClaimStatus.Verified

@@ -8,18 +8,11 @@ interface ItemCardProps {
   onUpdate: (itemId: number, changes: ItemUpdate) => void;
 }
 
-function ItemCard({ item, onClaim, onUpdate }: ItemCardProps) {
-  // Typed event handler: React.MouseEvent<HTMLButtonElement>
+// Displays one item card and lets the user claim it.
+function ItemCard({ item, onClaim }: ItemCardProps) {
   const handleClaimClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     onClaim(item.id);
-  };
-
-  // Second typed handler, demonstrating ItemUpdate (Partial<Item>) in action
-  const handleMarkLost = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    event.preventDefault();
-    const changes: ItemUpdate = { status: ItemStatus.Lost };
-    onUpdate(item.id, changes);
   };
 
   return (
@@ -43,12 +36,6 @@ function ItemCard({ item, onClaim, onUpdate }: ItemCardProps) {
           className="rounded-xl bg-violet-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:bg-slate-300 dark:disabled:bg-slate-700"
         >
           {item.status === ItemStatus.Claimed ? "Already Claimed" : "Claim Item"}
-        </button>
-        <button
-          onClick={handleMarkLost}
-          className="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100"
-        >
-          Mark as Lost
         </button>
       </div>
     </div>

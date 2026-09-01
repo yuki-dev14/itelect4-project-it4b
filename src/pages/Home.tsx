@@ -1,43 +1,53 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ItemCard from "../components/ItemCard";
-import { createClaim, getItems } from "../api/client";
-import useUiStore from "../store/uiStore";
-import type { ItemUpdate } from "../types/app";
+import { createClaim, getItems, updateItemStatus } from "../api/client";
+import { ItemStatus, type ItemUpdate } from "../types/app";
 import { claimSchema, type ClaimFormValues } from "../schemas/claimSchema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Home() {
+  // Search text for filtering the item list.
   const [searchText, setSearchText] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const darkMode = useUiStore((state) => state.darkMode);
-  const toggleDarkMode = useUiStore((state) => state.toggleDarkMode);
   const queryClient = useQueryClient();
+
+  // Fetch the current item list from the API.
   const { data: items, isLoading, isError } = useQuery({ queryKey: ["items"], queryFn: getItems });
+
+  // Submit a claim and immediately mark the item as claimed.
   const claimMutation = useMutation({
-    mutationFn: (values: ClaimFormValues) => createClaim({ ...values, claimantId: 1 }),
+    mutationFn: async (values: ClaimFormValues) => {
+      const claim = await createClaim({ ...values, claimantId: 1 });
+      await updateItemStatus(values.itemId, ItemStatus.Claimed);
+      return claim;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["items"] });
       queryClient.invalidateQueries({ queryKey: ["claims"] });
     },
   });
+
+  // Form setup for claim submission with validation.
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<ClaimFormValues>({
     resolver: zodResolver(claimSchema),
     defaultValues: { itemId: 0, claimantEmail: "", claimDetails: "" },
   });
 
-  useEffect(() => {
-    document.body.classList.toggle("dark", darkMode);
-  }, [darkMode]);
+  // Only show items that are not already claimed.
+  const availableItems = items?.filter((item) => item.status !== ItemStatus.Claimed) ?? [];
+  const filteredItems = availableItems.filter((item) => item.title.toLowerCase().includes(searchText.toLowerCase()));
 
-  const filteredItems = items?.filter((item) => item.title.toLowerCase().includes(searchText.toLowerCase()));
+  // Example update handler for future item editing.
   const handleUpdate = (itemId: number, changes: ItemUpdate): void => {
     console.log("Item update requested", itemId, changes);
   };
+
+  // When a user clicks Claim on an item card, populate the form field.
   const handleClaimItem = (itemId: number): void => {
     setValue("itemId", itemId, { shouldValidate: true });
     document.getElementById("claimDetails")?.focus();
@@ -51,9 +61,6 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-violet-600 dark:text-violet-400">Campus Hub</p>
             <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">Campus Lost &amp; Found</h1>
           </div>
-          <button onClick={toggleDarkMode} className="rounded-full border border-slate-300 bg-slate-100 px-4 py-2 text-sm font-medium dark:border-slate-700 dark:bg-slate-800">
-            {darkMode ? "Light mode" : "Dark mode"}
-          </button>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
           <Label htmlFor="search" className="sr-only">Search items</Label>
@@ -69,7 +76,7 @@ export default function Home() {
             <Label htmlFor="itemId">Item</Label>
             <select id="itemId" {...register("itemId", { valueAsNumber: true })} className="mt-2 h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm dark:bg-slate-900">
               <option value={0}>Choose an item</option>
-              {items?.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
+              {availableItems.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
             </select>
             {errors.itemId && <p className="mt-1 text-sm text-red-600">{errors.itemId.message}</p>}
           </div>
