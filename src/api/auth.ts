@@ -1,3 +1,5 @@
+import { AUTH_API_URL } from "./config";
+
 export interface AuthUser {
   id: string;
   name: string;
@@ -8,8 +10,6 @@ interface LoginResponse {
   token: string;
   user: AuthUser;
 }
-
-const AUTH_API_URL = (import.meta.env.VITE_AUTH_API_URL ?? "http://localhost:4000/api/auth").replace(/\/$/, "");
 
 async function request<T>(path: string, body: Record<string, string>): Promise<T> {
   const response = await fetch(`${AUTH_API_URL}${path}`, {

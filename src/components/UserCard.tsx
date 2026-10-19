@@ -4,7 +4,7 @@ import type { User, UserRole } from "../types/app";
 
 interface UserCardProps {
   user: User;
-  onRoleChange: (userId: number, newRole: UserRole) => void;
+  onRoleChange: (userId: string, newRole: UserRole) => void;
 }
 
 // Displays a user and lets the user change their role from a select box.

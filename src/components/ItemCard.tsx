@@ -1,11 +1,10 @@
 // src/components/ItemCard.tsx
-import type { Item, ItemUpdate } from "../types/app";
+import type { Item } from "../types/app";
 import { ItemStatus } from "../types/app";
 
 interface ItemCardProps {
   item: Item;
-  onClaim: (itemId: number) => void;
-  onUpdate: (itemId: number, changes: ItemUpdate) => void;
+  onClaim: (itemId: string) => void;
 }
 
 // Displays one item card and lets the user claim it.
@@ -23,7 +22,7 @@ function ItemCard({ item, onClaim }: ItemCardProps) {
           <h3 className="mt-1 text-lg font-semibold text-slate-900 dark:text-slate-100">{item.title}</h3>
         </div>
         <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-          {item.status}
+          {item.type} / {item.status}
         </span>
       </div>
       <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
@@ -32,10 +31,10 @@ function ItemCard({ item, onClaim }: ItemCardProps) {
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           onClick={handleClaimClick}
-          disabled={item.status === ItemStatus.Claimed}
+          disabled={item.status !== ItemStatus.Open}
           className="rounded-xl bg-violet-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:bg-slate-300 dark:disabled:bg-slate-700"
         >
-          {item.status === ItemStatus.Claimed ? "Already Claimed" : "Claim Item"}
+          {item.status === ItemStatus.Open ? "Claim Item" : "Unavailable"}
         </button>
       </div>
     </div>

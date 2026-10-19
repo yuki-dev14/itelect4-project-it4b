@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const claimSchema = z.object({
-  itemId: z.number().int().positive("Select an item to claim."),
+  itemId: z.string().min(1, "Select an item to claim."),
   claimantEmail: z.string().trim().email("Enter a valid campus email address."),
   claimDetails: z
     .string()
