@@ -9,7 +9,7 @@ export default function Items() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Lost items</h2>
+      <h2 className="text-2xl font-semibold mb-4">Lost and found items</h2>
       <ul className="space-y-2">
         {items?.map((it) => (
           <li key={it.id}>

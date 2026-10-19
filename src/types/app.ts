@@ -1,13 +1,13 @@
 // Shared type definitions for the app's core domain.
 // These types keep the data model consistent across components and API calls.
 export const ItemStatus = {
-  // Reserved for future item lifecycle states; not all are used in the current UI flow.
-  Lost: "lost",
-  Found: "found",
+  Open: "open",
   Claimed: "claimed",
+  Returned: "returned",
 } as const;
 
 export type ItemStatus = typeof ItemStatus[keyof typeof ItemStatus];
+export type ItemType = "lost" | "found";
 
 export const ClaimStatus = {
   // Reserved for future moderation/approval workflow.
@@ -23,7 +23,7 @@ export type UserRole = "student" | "security_admin";
 
 // A user in the campus system.
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: UserRole;
@@ -31,21 +31,27 @@ export interface User {
 
 // A found/lost item record.
 export interface Item {
-  id: number;
+  id: string;
   title: string;
   description: string;
+  type: ItemType;
+  category: string;
+  location: string;
   status: ItemStatus;
-  reportedBy: number; // User.id
+  reward: number;
+  reportedBy?: string;
   dateReported: Date;
 }
 
 // A claim made for an item.
 export interface Claim {
-  id: number;
-  itemId: number;
-  claimantId: number; // User.id
+  id: string;
+  itemId: string;
+  claimantId: string;
+  claimantEmail: string;
+  claimDetails: string;
   status: ClaimStatus;
-  verifiedBy?: number;
+  verifiedBy?: string;
 }
 
 /** Generic wrapper used by every function that returns a result. */
@@ -59,12 +65,12 @@ export interface ApiResponse<T> {
 export type ItemUpdate = Partial<Item>; // For editing only some item fields.
 export type UserSummary = Pick<User, "id" | "name">; // Lightweight display info.
 export type NewClaimInput = Omit<Claim, "id" | "status" | "verifiedBy">;
-export type ItemsById = Record<number, Item>;
+export type ItemsById = Record<string, Item>;
 
 /** JSON transport types keep dates as strings because the backend stores JSON strings. */
-export type ItemApi = Omit<Item, "dateReported"> & { dateReported: string };
-export type NewItemInput = Omit<Item, "id" | "dateReported"> & { dateReported: string };
-export type NewClaimApiInput = Omit<Claim, "id" | "status" | "verifiedBy"> & {
-  claimantEmail: string;
-  claimDetails: string;
+export type ItemApi = Omit<Item, "dateReported" | "reportedBy"> & {
+  createdAt: string;
+  userId?: string;
 };
+export type NewItemInput = Omit<Item, "id" | "dateReported" | "reportedBy">;
+export type NewClaimApiInput = Pick<Claim, "itemId" | "claimantEmail" | "claimDetails">;

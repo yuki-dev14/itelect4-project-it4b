@@ -3,8 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ItemCard from "../components/ItemCard";
-import { createClaim, getItems, updateItemStatus } from "../api/client";
-import { ItemStatus, type ItemUpdate } from "../types/app";
+import { createClaim, getItems } from "../api/client";
+import { ItemStatus } from "../types/app";
 import { claimSchema, type ClaimFormValues } from "../schemas/claimSchema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,36 +19,24 @@ export default function Home() {
   // Fetch the current item list from the API.
   const { data: items, isLoading, isError } = useQuery({ queryKey: ["items"], queryFn: getItems });
 
-  // Submit a claim and immediately mark the item as claimed.
   const claimMutation = useMutation({
-    mutationFn: async (values: ClaimFormValues) => {
-      const claim = await createClaim({ ...values, claimantId: 1 });
-      await updateItemStatus(values.itemId, ItemStatus.Claimed);
-      return claim;
-    },
+    mutationFn: createClaim,
     onSuccess: () => {
+      reset();
       queryClient.invalidateQueries({ queryKey: ["items"] });
       queryClient.invalidateQueries({ queryKey: ["claims"] });
     },
   });
 
-  // Form setup for claim submission with validation.
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<ClaimFormValues>({
     resolver: zodResolver(claimSchema),
-    defaultValues: { itemId: 0, claimantEmail: "", claimDetails: "" },
+    defaultValues: { itemId: "", claimantEmail: "", claimDetails: "" },
   });
 
-  // Only show items that are not already claimed.
-  const availableItems = items?.filter((item) => item.status !== ItemStatus.Claimed) ?? [];
+  const availableItems = items?.filter((item) => item.status === ItemStatus.Open) ?? [];
   const filteredItems = availableItems.filter((item) => item.title.toLowerCase().includes(searchText.toLowerCase()));
 
-  // Example update handler for future item editing.
-  const handleUpdate = (itemId: number, changes: ItemUpdate): void => {
-    console.log("Item update requested", itemId, changes);
-  };
-
-  // When a user clicks Claim on an item card, populate the form field.
-  const handleClaimItem = (itemId: number): void => {
+  const handleClaimItem = (itemId: string): void => {
     setValue("itemId", itemId, { shouldValidate: true });
     document.getElementById("claimDetails")?.focus();
   };
@@ -67,15 +55,15 @@ export default function Home() {
           <Input id="search" ref={searchInputRef} value={searchText} onChange={(event) => setSearchText(event.target.value)} placeholder="Search item" className="h-auto rounded-xl py-2 dark:bg-slate-900" />
           <Button type="button" onClick={() => searchInputRef.current?.focus()} className="h-auto rounded-xl bg-violet-600 py-2 text-sm text-white hover:bg-violet-700">Focus search</Button>
         </div>
-        <form onSubmit={handleSubmit((values) => { claimMutation.mutate(values); reset(); })} className="grid gap-4 rounded-2xl border border-violet-100 bg-violet-50/60 p-4 sm:grid-cols-2 dark:border-violet-900 dark:bg-violet-950/30">
+        <form onSubmit={handleSubmit((values) => claimMutation.mutate(values))} className="grid gap-4 rounded-2xl border border-violet-100 bg-violet-50/60 p-4 sm:grid-cols-2 dark:border-violet-900 dark:bg-violet-950/30">
           <div className="sm:col-span-2">
             <h2 className="text-lg font-semibold">Claim an item</h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Tell us how you can identify it.</p>
           </div>
           <div>
             <Label htmlFor="itemId">Item</Label>
-            <select id="itemId" {...register("itemId", { valueAsNumber: true })} className="mt-2 h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm dark:bg-slate-900">
-              <option value={0}>Choose an item</option>
+            <select id="itemId" {...register("itemId")} className="mt-2 h-8 w-full rounded-lg border border-input bg-white px-2.5 text-sm dark:bg-slate-900">
+              <option value="">Choose an item</option>
               {availableItems.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
             </select>
             {errors.itemId && <p className="mt-1 text-sm text-red-600">{errors.itemId.message}</p>}
@@ -93,12 +81,13 @@ export default function Home() {
           <Button type="submit" disabled={claimMutation.isPending} className="w-fit bg-violet-600 text-white hover:bg-violet-700">{claimMutation.isPending ? "Submitting..." : "Submit claim"}</Button>
         </form>
         {isLoading && <p>Loading items...</p>}
-        {isError && <p>Could not load items. Start the API with <code>npm run api</code>.</p>}
+        {isError && <p>Could not load items. Please sign in again and retry.</p>}
         {claimMutation.isSuccess && <p className="text-emerald-600">Claim submitted.</p>}
+        {claimMutation.isError && <p role="alert" className="text-red-600">{claimMutation.error.message}</p>}
         {filteredItems?.length === 0 && <p>No matching item found.</p>}
         <div className="grid gap-4 lg:grid-cols-2">
           {filteredItems?.map((item) => (
-            <ItemCard key={item.id} item={item} onClaim={handleClaimItem} onUpdate={handleUpdate} />
+            <ItemCard key={item.id} item={item} onClaim={handleClaimItem} />
           ))}
         </div>
       </div>

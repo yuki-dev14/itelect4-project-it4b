@@ -1,51 +1,47 @@
-import type { Claim, Item, ItemApi, ItemStatus, NewClaimApiInput } from "../types/app";
+import useAuthStore from "../store/authStore";
+import type { Claim, Item, ItemApi, NewClaimApiInput } from "../types/app";
+import { API_BASE_URL } from "./config";
 
-// Base URL for the local JSON server API.
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
-// Reusable fetch wrapper for the API.
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`, {
-    headers: { "Content-Type": "application/json" },
+  const token = useAuthStore.getState().token;
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options?.headers,
+    },
   });
-  if (!response.ok) throw new Error(`API request failed: ${response.status}`);
-  return response.json() as Promise<T>;
+
+  const result = await response.json().catch(() => null) as (T & { message?: string }) | null;
+  if (!response.ok) {
+    throw new Error(result?.message ?? `API request failed: ${response.status}`);
+  }
+  if (result === null) throw new Error("The API returned an empty response");
+  return result;
 }
 
-// Convert API string dates back into JavaScript Date objects.
 function toItem(item: ItemApi): Item {
-  return { ...item, dateReported: new Date(item.dateReported) };
+  const { createdAt, userId, ...fields } = item;
+  return { ...fields, reportedBy: userId, dateReported: new Date(createdAt) };
 }
 
-// Fetch all items from the server.
 export async function getItems(): Promise<Item[]> {
   const items = await request<ItemApi[]>("/items");
   return items.map(toItem);
 }
 
-// Fetch one item by id.
-export async function getItem(id: number): Promise<Item> {
+export async function getItem(id: string): Promise<Item> {
   return toItem(await request<ItemApi>(`/items/${id}`));
 }
 
-// Fetch all claims from the server.
 export async function getClaims(): Promise<Claim[]> {
   return request<Claim[]>("/claims");
 }
 
-// Update an item's status to claimed or another state.
-export async function updateItemStatus(itemId: number, status: ItemStatus): Promise<Item> {
-  return toItem(await request<ItemApi>(`/items/${itemId}`, {
-    method: "PATCH",
-    body: JSON.stringify({ status }),
-  }));
-}
-
-// Submit a new claim to the API.
 export async function createClaim(input: NewClaimApiInput): Promise<Claim> {
   return request<Claim>("/claims", {
     method: "POST",
-    body: JSON.stringify({ ...input, status: "pending" }),
+    body: JSON.stringify(input),
   });
 }

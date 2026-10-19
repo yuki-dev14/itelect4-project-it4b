@@ -6,11 +6,10 @@ export default function ItemDetail() {
   const params = useParams();
   const { id } = params;
   const navigate = useNavigate();
-  const itemId = Number(id);
   const { data: item, isLoading, isError } = useQuery({
-    queryKey: ["item", itemId],
-    queryFn: () => getItem(itemId),
-    enabled: Number.isInteger(itemId),
+    queryKey: ["item", id],
+    queryFn: () => getItem(id!),
+    enabled: Boolean(id),
   });
 
   return (
