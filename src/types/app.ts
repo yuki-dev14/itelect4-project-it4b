@@ -54,6 +54,15 @@ export interface Claim {
   verifiedBy?: string;
 }
 
+export type AiReadiness = "ready" | "almost" | "not-yet";
+
+export interface AiReview {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  readiness: AiReadiness;
+}
+
 /** Generic wrapper used by every function that returns a result. */
 export interface ApiResponse<T> {
   success: boolean;
