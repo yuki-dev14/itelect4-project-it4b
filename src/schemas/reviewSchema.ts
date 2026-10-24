@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const reviewRequestSchema = z.object({
+export const reviewFormSchema = z.object({
   prompt: z
     .string()
     .trim()
@@ -8,4 +8,8 @@ export const reviewRequestSchema = z.object({
     .max(2000, "Keep your project description to 2000 characters or fewer."),
 });
 
-export type ReviewRequestValues = z.infer<typeof reviewRequestSchema>;
+export type ReviewFormValues = z.infer<typeof reviewFormSchema>;
+
+// Aliases for compatibility
+export const reviewRequestSchema = reviewFormSchema;
+export type ReviewRequestValues = ReviewFormValues;
