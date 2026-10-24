@@ -31,6 +31,7 @@ export default function Layout() {
           <NavLink to="/items" className={({ isActive }) => isActive ? "font-semibold text-slate-950 dark:text-white" : "hover:text-slate-950 dark:hover:text-white"}>Items</NavLink>
           <NavLink to="/claims" className={({ isActive }) => isActive ? "font-semibold text-slate-950 dark:text-white" : "hover:text-slate-950 dark:hover:text-white"}>Claims</NavLink>
           <NavLink to="/profile" className={({ isActive }) => isActive ? "font-semibold text-slate-950 dark:text-white" : "hover:text-slate-950 dark:hover:text-white"}>Profile</NavLink>
+          <NavLink to="/review" className={({ isActive }) => isActive ? "font-semibold text-slate-950 dark:text-white" : "hover:text-slate-950 dark:hover:text-white"}>AI Review</NavLink>
           <span className="ml-auto border-l border-slate-200 pl-5 text-slate-500 dark:border-slate-700 dark:text-slate-300">{username}</span>
           <button onClick={toggleDarkMode} className="rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 font-medium text-slate-700 transition hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">
             {darkMode ? "Light mode" : "Dark mode"}

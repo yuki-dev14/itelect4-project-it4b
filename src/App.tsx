@@ -9,6 +9,7 @@ import ItemDetail from "./pages/ItemDetail";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Review from "./pages/Review";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="claims" element={<Claims />} />
           <Route path="items/:id" element={<ItemDetail />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="review" element={<Review />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -1,5 +1,5 @@
 import useAuthStore from "../store/authStore";
-import type { Claim, Item, ItemApi, NewClaimApiInput } from "../types/app";
+import type { AiReview, Claim, Item, ItemApi, NewClaimApiInput } from "../types/app";
 import { API_BASE_URL } from "./config";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -43,5 +43,12 @@ export async function createClaim(input: NewClaimApiInput): Promise<Claim> {
   return request<Claim>("/claims", {
     method: "POST",
     body: JSON.stringify(input),
+  });
+}
+
+export async function askAi(prompt: string): Promise<AiReview> {
+  return request<AiReview>("/ai", {
+    method: "POST",
+    body: JSON.stringify({ prompt }),
   });
 }
