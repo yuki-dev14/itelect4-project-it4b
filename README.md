@@ -1,52 +1,61 @@
-# GT2P1 Lost and Found App
+# itelect4-project-it4b
 
-This project is a simple web app for managing lost and found items on campus.
+[![CI](https://github.com/yuki-dev14/itelect4-project-it4b/actions/workflows/ci.yml/badge.svg)](https://github.com/yuki-dev14/itelect4-project-it4b/actions/workflows/ci.yml)
 
-## What it does
+The frontend for the ITELECT4 class project: a campus lost and found tracking platform built with React, Vite, Tailwind CSS, TypeScript, and TanStack Query, connecting to an Express backend and Google Gemini AI for project reviews.
 
-- Shows a sample lost item
-- Displays a user profile
-- Shows a claim summary
-- Allows basic item and claim actions in the UI
+- **Live Application:** https://itelect4-project-it4b.vercel.app
+- **Live API Health:** https://itelect4-backend-euclids-projects-447a0a30.vercel.app/api/health
+- **Backend Repo:** https://github.com/yuki-dev14/itelect4-backend
 
-## Tech stack
+## Architecture
 
-- React
-- TypeScript
-- Vite
+```mermaid
+flowchart LR
+  fe["itelect4-project<br/>React + Vite on Vercel"]
+  be["itelect4-backend<br/>Express on Vercel"]
+  db[("MongoDB Atlas")]
+  ai["Gemini API"]
+  fe -- "fetch + Bearer token" --> be
+  be -- "Mongoose" --> db
+  be -- "GEMINI_API_KEY" --> ai
+```
 
-## How to run
+## Features
+
+- **Item Tracking:** Browse, view, and report lost and found items across campus.
+- **Claim Processing:** Submit and view verification claims for items.
+- **Authentication:** Student login and registration with JWT authentication.
+- **AI Project Review:** Request automated project reviews powered by Google Gemini.
+- **Automated Testing & CI:** Vitest and React Testing Library suites verified on every push via GitHub Actions.
+
+## Running Locally
 
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Start the development server:
+2. Configure `.env` based on `.env.example`:
+   ```bash
+   VITE_API_URL=http://localhost:4000/api
+   ```
+3. Run the development server:
    ```bash
    npm run dev
    ```
-3. Open the local URL shown in the terminal.
+4. Run tests:
+   ```bash
+   npm test
+   ```
+5. Run linting:
+   ```bash
+   npm run lint
+   ```
+6. Build for production:
+   ```bash
+   npm run build
+   ```
 
-## Build
+## AI Disclosure
 
-To create a production build, run:
-
-```bash
-npm run build
-```
-
-## Types and utility types
-
-This app uses simple TypeScript types to organize data:
-
-- User: information about a person
-- Item: details about a lost or found item
-- Claim: a request to claim an item
-- ApiResponse<T>: a generic wrapper for responses
-
-It also uses utility types:
-
-- Partial<Item>: allows updating only some fields of an item
-- Pick<User, "id" | "name">: selects only the id and name from a user
-- Omit<Claim, "id" | "status" | "verifiedBy">: removes some fields from a claim
-- Record<number, Item>: creates a map of item IDs to items
+This project integrates Google's Gemini API for generating intelligent student project reviews. AI coding assistants were used to assist in testing scaffolding, component validation, CI workflow configurations, and documentation adhering to course specifications.

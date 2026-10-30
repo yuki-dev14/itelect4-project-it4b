@@ -7,3 +7,13 @@ export interface AiReview {
   improvements: string[];
   readiness: "ready" | "almost" | "not-yet";
 }
+
+// ===== SESSION 12: submission type used across components and tests ===
+export interface ApiSubmission {
+  id: string;
+  studentId: string;
+  courseCode: string;
+  repoUrl: string;
+  submittedAt: string;
+  score?: number;
+}
